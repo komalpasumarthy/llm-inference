@@ -1,0 +1,37 @@
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.0",
+    "pre-commit>=4.6.2",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+    "--strict-markers",
+    # Skip expensive tests by default; run them explicitly, e.g. `pytest -m gpu`.
+    "-m", "not network and not gpu and not slow and not e2e",
+]
+testpaths = ["packages"]
+markers = [
+    "network: needs internet access (e.g. the Hugging Face Hub)",
+    "gpu: needs an NVIDIA GPU",
+    "slow: takes more than a few seconds",
+    "e2e: builds and runs the Docker image",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
