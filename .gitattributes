@@ -1,0 +1,19 @@
+# Default rule: Git determines text vs binary; normalizes to LF in repo, native on checkout
+* text=auto
+
+# Scripts and Linux container definitions must always use LF to prevent "/bin/sh^M: bad interpreter"
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.Dockerfile text eol=lf
+
+# Config and CI files read by Linux tools
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+
+# Binary media (plots, images) — no line-ending changes or text diffs
+*.png binary
+*.jpg binary
+
+# Collapse machine-generated lockfiles in GitHub PR reviews
+uv.lock linguist-generated=true
